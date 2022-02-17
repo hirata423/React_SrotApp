@@ -1,0 +1,48 @@
+.mainTop {
+  width: 100%;
+  height: 200px;
+  font-size: 120px;
+  background-color: rgb(0, 0, 0);
+  text-align: center;
+}
+
+.mainBack {
+  background-color: rgb(0, 0, 0);
+  border-top: 7px solid rgb(247, 201, 115);
+}
+
+.title {
+  color: rgb(247, 201, 115);
+  font-size: 100px;
+  margin: 0;
+}
+.allSrotBox {
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+}
+
+img {
+  width: 230px;
+  height: 230px;
+}
+
+button {
+  width: 80px;
+  height: 80px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+}
+
+/*ーーーーーースタートボタン周りーーーーーーーー*/
+
+.risetButton {
+  width: 80px;
+  height: 80px;
+  color: rgb(255, 255, 255);
+  background-color: red;
+  border-radius: 50%;
+}
