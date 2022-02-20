@@ -16,18 +16,18 @@ export const App = () => {
   const [centerSrot, setCenterSrot] = useState([White]);
   const [rightSrot, setRightSrot] = useState([White]);
 
-  let pushLeftSrotButtonKey;
-  let pushCenterSrotButtonKey;
-  let pushRightSrotButtonKey;
+  const [leftIntervalKey, setleftIntervalKey] = useState(0);
+  const [centerIntervalKey, setCenterIntervalKey] = useState(0);
+  const [rightIntervalKey, setRightIntervalKey] = useState(0);
 
   //スロットスタートボタン
   const allSrotStartButton = () => {
     leftSrotStart();
-    pushLeftSrotButtonKey = setInterval(leftSrotStart, 200);
+    setleftIntervalKey(setInterval(leftSrotStart, 200));
     centerSrotStart();
-    pushCenterSrotButtonKey = setInterval(centerSrotStart, 175);
+    setCenterIntervalKey(setInterval(centerSrotStart, 175));
     rightSrotStart();
-    pushRightSrotButtonKey = setInterval(rightSrotStart, 150);
+    setRightIntervalKey(setInterval(rightSrotStart, 150));
   };
 
   //左の処理【動】
@@ -37,9 +37,7 @@ export const App = () => {
   };
   //左の処理【止】
   const leftSrotStopButton = () => {
-    clearInterval(pushLeftSrotButtonKey);
-    const nowLeftSrot = [leftSrot];
-    setleftSrot(nowLeftSrot);
+    clearInterval(leftIntervalKey);
   };
 
   //真ん中の処理【動】
@@ -49,9 +47,7 @@ export const App = () => {
   };
   //真ん中の処理【止】
   const centerSrotStopButton = () => {
-    clearInterval(pushCenterSrotButtonKey);
-    const nowCenterSrot = [centerSrot];
-    setCenterSrot(nowCenterSrot);
+    clearInterval(centerIntervalKey);
   };
 
   //右の処理【動】
@@ -61,9 +57,7 @@ export const App = () => {
   };
   //右の処理【止】
   const rightSrotStopButton = () => {
-    clearInterval(pushRightSrotButtonKey);
-    const nowRightSrot = [rightSrot];
-    setRightSrot(nowRightSrot);
+    clearInterval(rightIntervalKey);
   };
 
   return (
@@ -74,17 +68,23 @@ export const App = () => {
           <div className="leftSrot">
             <img src={leftSrot} />
             <br />
-            <button onClick={leftSrotStopButton}>ストップ</button>
+            <button className="left" onClick={leftSrotStopButton}>
+              ストップ
+            </button>
           </div>
           <div className="centerSrot">
             <img src={centerSrot} />
             <br />
-            <button onClick={centerSrotStopButton}>ストップ</button>
+            <button className="center" onClick={centerSrotStopButton}>
+              ストップ
+            </button>
           </div>
           <div className="rightSrot">
             <img src={rightSrot} />
             <br />
-            <button onClick={rightSrotStopButton}>ストップ</button>
+            <button className="right" onClick={rightSrotStopButton}>
+              ストップ
+            </button>
           </div>
         </div>
         <div className="mainBack">
