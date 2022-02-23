@@ -12,47 +12,46 @@ import Apple from "./images/apple.jpg";
 export const App = () => {
   const srotDisplay = [Bell, Budoo, Money, Piero, Seven, Suika, Apple];
 
+  //スロット
   const [leftSrot, setleftSrot] = useState([White]);
   const [centerSrot, setCenterSrot] = useState([White]);
   const [rightSrot, setRightSrot] = useState([White]);
-
+  //タイマー
   const [leftIntervalKey, setleftIntervalKey] = useState(0);
   const [centerIntervalKey, setCenterIntervalKey] = useState(0);
   const [rightIntervalKey, setRightIntervalKey] = useState(0);
+  //ボタンの色
+  const [leftButtonChange, setLeftButtonChange] = useState(true);
+  const [centerButtonChange, setCenterButtonChange] = useState(true);
+  const [rightButtonChange, setRightButtonChange] = useState(true);
 
-  const [allHandle, setAllHandle] = useState(true);
-
-  const [leftHandle, setLeftHandle] = useState(false);
-  const [centerHandle, setCenterHandle] = useState(false);
-  const [rightHandle, setRightHandle] = useState(false);
+  //disabled
+  const [allHandle, setAllHandle] = useState(false);
+  const [leftHandle, setLeftHandle] = useState(true);
+  const [centerHandle, setCenterHandle] = useState(true);
+  const [rightHandle, setRightHandle] = useState(true);
 
   //スロットスタートボタン
-
   const allSrotStartButton = () => {
-    if (allHandle) {
+    if (!allHandle) {
       leftSrotStart();
       setleftIntervalKey(setInterval(leftSrotStart, 200));
-      document.getElementById("left").style.backgroundColor = "red";
+      setLeftButtonChange(true);
       centerSrotStart();
       setCenterIntervalKey(setInterval(centerSrotStart, 175));
-      document.getElementById("center").style.backgroundColor = "red";
+      setCenterButtonChange(true);
       rightSrotStart();
       setRightIntervalKey(setInterval(rightSrotStart, 150));
-      document.getElementById("right").style.backgroundColor = "red";
+      setRightButtonChange(true);
 
-      setLeftHandle(true);
-      setCenterHandle(true);
-      setRightHandle(true);
+      setLeftHandle(false);
+      setCenterHandle(false);
+      setRightHandle(false);
 
-      setAllHandle(false);
-      console.log("スタートされました");
-    } else if (leftHandle && centerHandle && rightHandle) {
       setAllHandle(true);
-      // setLeftHandle(true);
-      // setCenterHandle(true);
-      // setRightHandle(true);
-
-      console.log("リセットします");
+    }
+    if (!leftHandle && !centerHandle && !rightHandle) {
+      setAllHandle(false);
     }
   };
 
@@ -60,33 +59,39 @@ export const App = () => {
   const leftSrotStart = () => {
     const rndLeftSrot = Math.floor(Math.random() * srotDisplay.length);
     setleftSrot(srotDisplay[rndLeftSrot]);
+    setAllHandle(true);
   };
   //左の処理【止】
   const leftSrotStopButton = () => {
     clearInterval(leftIntervalKey);
-    document.getElementById("left").style.backgroundColor = "blue";
+    setLeftButtonChange(false);
   };
 
   //真ん中の処理【動】
   const centerSrotStart = () => {
     const rndCenterSrot = Math.floor(Math.random() * srotDisplay.length);
     setCenterSrot(srotDisplay[rndCenterSrot]);
+    setAllHandle(true);
   };
   //真ん中の処理【止】
   const centerSrotStopButton = () => {
     clearInterval(centerIntervalKey);
-    document.getElementById("center").style.backgroundColor = "blue";
+    setCenterButtonChange(false);
   };
 
   //右の処理【動】
   const rightSrotStart = () => {
     const rndRightSrot = Math.floor(Math.random() * srotDisplay.length);
     setRightSrot(srotDisplay[rndRightSrot]);
+    setAllHandle(true);
   };
   //右の処理【止】
   const rightSrotStopButton = () => {
-    clearInterval(rightIntervalKey);
-    document.getElementById("right").style.backgroundColor = "blue";
+    if (!rightHandle) {
+      clearInterval(rightIntervalKey);
+      setRightButtonChange(false);
+      setAllHandle(false);
+    }
   };
 
   return (
@@ -97,45 +102,54 @@ export const App = () => {
           <div className="leftSrot">
             <img src={leftSrot} />
             <br />
-            {/* <button className="left" onClick={leftSrotStopButton}>ストップ</button> */}
-            <input
-              id="left"
-              type="button"
+            <button
+              disabled={leftHandle}
+              className="left"
+              style={
+                leftButtonChange
+                  ? { backgroundColor: "red" }
+                  : { backgroundColor: "blue" }
+              }
               onClick={leftSrotStopButton}
-              value=""
-            ></input>
+            ></button>
           </div>
           <div className="centerSrot">
             <img src={centerSrot} />
             <br />
-            {/* <button className="center" onClick={centerSrotStopButton}>ストップ</button> */}
-            <input
-              id="center"
-              type="button"
+            <button
+              disabled={centerHandle}
+              className="center"
+              style={
+                centerButtonChange
+                  ? { backgroundColor: "red" }
+                  : { backgroundColor: "blue" }
+              }
               onClick={centerSrotStopButton}
-              value=""
-            ></input>
+            ></button>
           </div>
           <div className="rightSrot">
             <img src={rightSrot} />
             <br />
-            {/* <button className="right" onClick={rightSrotStopButton}>ストップ</button> */}
-            <input
-              id="right"
-              type="button"
+            <button
+              disabled={rightHandle}
+              className="right"
+              style={
+                rightButtonChange
+                  ? { backgroundColor: "red" }
+                  : { backgroundColor: "blue" }
+              }
               onClick={rightSrotStopButton}
-              value=""
-            ></input>
+            ></button>
           </div>
         </div>
         <div className="mainBack">
-          {/* <button className="risetButton" onClick={allSrotStartButton}>スタート/ストップ</button> */}
-          <input
-            id="all"
-            type="button"
+          <button
+            disabled={allHandle}
             className="risetButton"
             onClick={allSrotStartButton}
-          ></input>
+          >
+            スタート/ストップ
+          </button>
         </div>
       </div>
     </>
