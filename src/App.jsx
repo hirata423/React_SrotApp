@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import White from "./images/white.jpg";
 import Bell from "./images/bell.jpg";
@@ -48,7 +48,7 @@ export const App = () => {
       setCenterHandle(false);
       setRightHandle(false);
 
-      setAllHandle(true);
+      setAllHandle(false);
     }
     if (!leftHandle && !centerHandle && !rightHandle) {
       setAllHandle(false);
@@ -65,6 +65,7 @@ export const App = () => {
   const leftSrotStopButton = () => {
     clearInterval(leftIntervalKey);
     setLeftButtonChange(false);
+    setAllHandle(false);
   };
 
   //真ん中の処理【動】
@@ -77,6 +78,7 @@ export const App = () => {
   const centerSrotStopButton = () => {
     clearInterval(centerIntervalKey);
     setCenterButtonChange(false);
+    setAllHandle(false);
   };
 
   //右の処理【動】
@@ -87,11 +89,9 @@ export const App = () => {
   };
   //右の処理【止】
   const rightSrotStopButton = () => {
-    if (!rightHandle) {
-      clearInterval(rightIntervalKey);
-      setRightButtonChange(false);
-      setAllHandle(false);
-    }
+    clearInterval(rightIntervalKey);
+    setRightButtonChange(false);
+    setAllHandle(false);
   };
 
   return (
@@ -148,7 +148,7 @@ export const App = () => {
             className="risetButton"
             onClick={allSrotStartButton}
           >
-            スタート/ストップ
+            スタート
           </button>
         </div>
       </div>
