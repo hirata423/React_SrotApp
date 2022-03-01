@@ -8,6 +8,12 @@ import Piero from "./images/piero.jpg";
 import Seven from "./images/seven.jpg";
 import Suika from "./images/suika.jpg";
 import Apple from "./images/apple.jpg";
+import { LeftComponent } from "./components/leftComponent";
+import { CenterComponent } from "./components/centerComponent";
+import { RightComponent } from "./components/rightComponent";
+import { AllStart } from "./components/allComponent";
+import { MoveLeftSrot } from "./moveComponent/leftComponent";
+// import { LeftSrotStopButton } from "./stopComponent/leftComponent";
 
 export const App = () => {
   const srotDisplay = [Bell, Budoo, Money, Piero, Seven, Suika, Apple];
@@ -24,7 +30,6 @@ export const App = () => {
   const [leftButtonChange, setLeftButtonChange] = useState(true);
   const [centerButtonChange, setCenterButtonChange] = useState(true);
   const [rightButtonChange, setRightButtonChange] = useState(true);
-
   //disabled
   const [allHandle, setAllHandle] = useState(false);
   const [leftHandle, setLeftHandle] = useState(true);
@@ -56,12 +61,25 @@ export const App = () => {
   };
 
   //左の処理【動】
-  const leftSrotStart = () => {
-    const rndLeftSrot = Math.floor(Math.random() * srotDisplay.length);
-    setleftSrot(srotDisplay[rndLeftSrot]);
-    setAllHandle(true);
-  };
+
+  // const leftSrotStart = () => {
+  <MoveLeftSrot
+    display={srotDisplay}
+    srot={setleftSrot}
+    handle={setAllHandle}
+  />;
+  const rndLeftSrot = Math.floor(Math.random() * srotDisplay.length);
+  setleftSrot(srotDisplay[rndLeftSrot]);
+  setAllHandle(true);
+  // };
+
   //左の処理【止】
+
+  // <LeftSrotStopButton
+  //   key={leftIntervalKey}
+  //   change={setLeftButtonChange}
+  //   handle={setAllHandle}
+  // />;
   const leftSrotStopButton = () => {
     clearInterval(leftIntervalKey);
     setLeftButtonChange(false);
@@ -99,57 +117,27 @@ export const App = () => {
       <div className="mainTop">
         <h1 className="title">Srot Game</h1>
         <div className="allSrotBox">
-          <div className="leftSrot">
-            <img src={leftSrot} />
-            <br />
-            <button
-              disabled={leftHandle}
-              className="left"
-              style={
-                leftButtonChange
-                  ? { backgroundColor: "red" }
-                  : { backgroundColor: "blue" }
-              }
-              onClick={leftSrotStopButton}
-            ></button>
-          </div>
-          <div className="centerSrot">
-            <img src={centerSrot} />
-            <br />
-            <button
-              disabled={centerHandle}
-              className="center"
-              style={
-                centerButtonChange
-                  ? { backgroundColor: "red" }
-                  : { backgroundColor: "blue" }
-              }
-              onClick={centerSrotStopButton}
-            ></button>
-          </div>
-          <div className="rightSrot">
-            <img src={rightSrot} />
-            <br />
-            <button
-              disabled={rightHandle}
-              className="right"
-              style={
-                rightButtonChange
-                  ? { backgroundColor: "red" }
-                  : { backgroundColor: "blue" }
-              }
-              onClick={rightSrotStopButton}
-            ></button>
-          </div>
+          <LeftComponent
+            image={leftSrot}
+            handle={leftHandle}
+            change={leftButtonChange}
+            stop={leftSrotStopButton}
+          />
+          <CenterComponent
+            image={centerSrot}
+            handle={centerHandle}
+            change={centerButtonChange}
+            stop={centerSrotStopButton}
+          />
+          <RightComponent
+            image={rightSrot}
+            handle={rightHandle}
+            change={rightButtonChange}
+            stop={rightSrotStopButton}
+          />
         </div>
         <div className="mainBack">
-          <button
-            disabled={allHandle}
-            className="risetButton"
-            onClick={allSrotStartButton}
-          >
-            スタート
-          </button>
+          <AllStart handle={allHandle} stop={allSrotStartButton} />
         </div>
       </div>
     </>
