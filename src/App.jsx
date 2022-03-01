@@ -8,20 +8,16 @@ import Piero from "./images/piero.jpg";
 import Seven from "./images/seven.jpg";
 import Suika from "./images/suika.jpg";
 import Apple from "./images/apple.jpg";
-import { LeftComponent } from "./components/leftComponent";
-import { CenterComponent } from "./components/centerComponent";
-import { RightComponent } from "./components/rightComponent";
+import { SlotComponent } from "./components/slotComponent";
 import { AllStart } from "./components/allComponent";
-import { MoveLeftSrot } from "./moveComponent/leftComponent";
-// import { LeftSrotStopButton } from "./stopComponent/leftComponent";
 
 export const App = () => {
-  const srotDisplay = [Bell, Budoo, Money, Piero, Seven, Suika, Apple];
+  const slotDisplay = [Bell, Budoo, Money, Piero, Seven, Suika, Apple];
 
   //スロット
-  const [leftSrot, setleftSrot] = useState([White]);
-  const [centerSrot, setCenterSrot] = useState([White]);
-  const [rightSrot, setRightSrot] = useState([White]);
+  const [leftSlot, setleftSlot] = useState([White]);
+  const [centerSlot, setCenterSlot] = useState([White]);
+  const [rightSlot, setRightSlot] = useState([White]);
   //タイマー
   const [leftIntervalKey, setleftIntervalKey] = useState(0);
   const [centerIntervalKey, setCenterIntervalKey] = useState(0);
@@ -37,22 +33,23 @@ export const App = () => {
   const [rightHandle, setRightHandle] = useState(true);
 
   //スロットスタートボタン
-  const allSrotStartButton = () => {
+  const allSlotStartButton = () => {
     if (!allHandle) {
-      leftSrotStart();
-      setleftIntervalKey(setInterval(leftSrotStart, 200));
+      moveSlot(setleftSlot);
+      setleftIntervalKey(setInterval(() => moveSlot(setleftSlot), 200));
       setLeftButtonChange(true);
-      centerSrotStart();
-      setCenterIntervalKey(setInterval(centerSrotStart, 175));
+
+      moveSlot(setCenterSlot);
+      setCenterIntervalKey(setInterval(() => moveSlot(setCenterSlot), 175));
       setCenterButtonChange(true);
-      rightSrotStart();
-      setRightIntervalKey(setInterval(rightSrotStart, 150));
+
+      moveSlot(setRightSlot);
+      setRightIntervalKey(setInterval(() => moveSlot(setRightSlot), 150));
       setRightButtonChange(true);
 
       setLeftHandle(false);
       setCenterHandle(false);
       setRightHandle(false);
-
       setAllHandle(false);
     }
     if (!leftHandle && !centerHandle && !rightHandle) {
@@ -60,84 +57,62 @@ export const App = () => {
     }
   };
 
-  //左の処理【動】
-
-  // const leftSrotStart = () => {
-  <MoveLeftSrot
-    display={srotDisplay}
-    srot={setleftSrot}
-    handle={setAllHandle}
-  />;
-  const rndLeftSrot = Math.floor(Math.random() * srotDisplay.length);
-  setleftSrot(srotDisplay[rndLeftSrot]);
-  setAllHandle(true);
-  // };
-
-  //左の処理【止】
-
-  // <LeftSrotStopButton
-  //   key={leftIntervalKey}
-  //   change={setLeftButtonChange}
-  //   handle={setAllHandle}
-  // />;
-  const leftSrotStopButton = () => {
-    clearInterval(leftIntervalKey);
-    setLeftButtonChange(false);
-    setAllHandle(false);
-  };
-
-  //真ん中の処理【動】
-  const centerSrotStart = () => {
-    const rndCenterSrot = Math.floor(Math.random() * srotDisplay.length);
-    setCenterSrot(srotDisplay[rndCenterSrot]);
+  //スロットが動き出す処理　　"./memo.befor"に前の記述あり
+  const moveSlot = (func) => {
+    const rndSlotDisplay = Math.floor(Math.random() * slotDisplay.length);
+    func(slotDisplay[rndSlotDisplay]);
     setAllHandle(true);
   };
-  //真ん中の処理【止】
-  const centerSrotStopButton = () => {
-    clearInterval(centerIntervalKey);
-    setCenterButtonChange(false);
+
+  //スロットの停止
+  const stopSlot = (state, func) => {
+    clearInterval(state);
+    func(false);
     setAllHandle(false);
   };
 
-  //右の処理【動】
-  const rightSrotStart = () => {
-    const rndRightSrot = Math.floor(Math.random() * srotDisplay.length);
-    setRightSrot(srotDisplay[rndRightSrot]);
-    setAllHandle(true);
+  //左・中・右
+  const leftSlotStopButton = () => {
+    stopSlot(leftIntervalKey, setLeftButtonChange);
   };
-  //右の処理【止】
-  const rightSrotStopButton = () => {
-    clearInterval(rightIntervalKey);
-    setRightButtonChange(false);
-    setAllHandle(false);
+
+  const centerSlotStopButton = () => {
+    stopSlot(centerIntervalKey, setCenterButtonChange);
+  };
+
+  const rightSlotStopButton = () => {
+    stopSlot(rightIntervalKey, setRightButtonChange);
   };
 
   return (
     <>
       <div className="mainTop">
-        <h1 className="title">Srot Game</h1>
-        <div className="allSrotBox">
-          <LeftComponent
-            image={leftSrot}
+        <h1 className="title">Slot Game</h1>
+        <div className="allSlotBox">
+          <SlotComponent
+            image={leftSlot}
             handle={leftHandle}
             change={leftButtonChange}
-            stop={leftSrotStopButton}
+            stop={leftSlotStopButton}
+            name={leftSlot}
           />
-          <CenterComponent
-            image={centerSrot}
+          <SlotComponent
+            image={centerSlot}
             handle={centerHandle}
             change={centerButtonChange}
-            stop={centerSrotStopButton}
+            stop={centerSlotStopButton}
+            name={centerSlot}
           />
-          <RightComponent
-            image={rightSrot}
+          <SlotComponent
+            image={rightSlot}
             handle={rightHandle}
             change={rightButtonChange}
-            stop={rightSrotStopButton}
+            stop={rightSlotStopButton}
+            name={rightSlot}
           />
         </div>
         <div className="mainBack">
-          <AllStart handle={allHandle} stop={allSrotStartButton} />
+          <AllStart handle={allHandle} stop={allSlotStartButton} />
         </div>
       </div>
     </>

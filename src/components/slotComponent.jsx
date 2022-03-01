@@ -1,9 +1,9 @@
 import React from "react";
 
-export const LeftComponent = (props) => {
-  const { image, handle, change, stop } = props;
+export const SlotComponent = (props) => {
+  const { image, handle, change, stop, name } = props;
   return (
-    <div className="leftSrot">
+    <div className="leftSlot">
       <img src={image} alt="" />
       <br />
       <button

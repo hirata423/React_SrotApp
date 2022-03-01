@@ -1,0 +1,109 @@
+
+スロットが動き出す処理をバラバラに記述していた
+
+//左の処理【動】
+  // const leftSlotStart = () => {
+  //   const rndLeftSlot = Math.floor(Math.random() * slotDisplay.length);
+  //   setleftSlot(slotDisplay[rndLeftSlot]);
+  //   setAllHandle(true);
+  // };
+  //真ん中の処理【動】
+  // const centerSlotStart = () => {
+  //   const rndCenterSlot = Math.floor(Math.random() * slotDisplay.length);
+  //   setCenterSlot(slotDisplay[rndCenterSlot]);
+  //   setAllHandle(true);
+  // };
+
+  //右の処理【動】
+  // const rightSlotStart = () => {
+  //   const rndRightSlot = Math.floor(Math.random() * slotDisplay.length);
+  //   setRightSlot(slotDisplay[rndRightSlot]);
+  //   setAllHandle(true);
+  // };
+
+
+スロットを止める処理をバラバラに記述していた
+
+//左の処理【止】
+  const leftSlotStopButton = () => {
+    clearInterval(leftIntervalKey);
+    setLeftButtonChange(false);
+    setAllHandle(false);
+  };
+
+  //真ん中の処理【止】
+  const centerSlotStopButton = () => {
+    clearInterval(centerIntervalKey);
+    setCenterButtonChange(false);
+    setAllHandle(false);
+  };
+
+  //右の処理【止】
+  const rightSlotStopButton = () => {
+    clearInterval(rightIntervalKey);
+    setRightButtonChange(false);
+    setAllHandle(false);
+  };
+
+
+  3つのスロットのコンポーネントもバラバラに喜寿tしていた
+左
+// import React from "react";
+
+// export const RightComponent = (props) => {
+//   const { image, handle, change, stop } = props;
+//   return (
+//     <div className="leftSlot">
+//       <img src={image} alt="" />
+//       <br />
+//       <button
+//         disabled={handle}
+//         style={
+//           change ? { backgroundColor: "red" } : { backgroundColor: "blue" }
+//         }
+//         onClick={stop}
+//       ></button>
+//     </div>
+//   );
+// };
+
+
+  真ん中
+  // import React from "react";
+// export const CenterComponent = (props) => {
+//   const { image, handle, change, stop,  } = props;
+//   return (
+//     <div className="centerSlot">
+//       <img src={image} alt="" />
+//       <br />
+//       <button
+//         disabled={handle}
+//         style={
+//           change ? { backgroundColor: "red" } : { backgroundColor: "blue" }
+//         }
+//         onClick={stop}
+//       ></button>
+//     </div>
+//   );
+// };
+
+右
+// import React from "react";
+
+// export const RightComponent = (props) => {
+//   const { image, handle, change, stop,  } = props;
+//   return (
+//     <div className="rightSlot">
+//       <img src={image} alt="" />
+//       <br />
+//       <button
+//         disabled={handle}
+//         style={
+//           change ? { backgroundColor: "red" } : { backgroundColor: "blue" }
+//         }
+//         onClick={stop}
+//       ></button>
+//     </div>
+//   );
+// };
+
